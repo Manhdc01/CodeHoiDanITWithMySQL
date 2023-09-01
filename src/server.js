@@ -1,5 +1,5 @@
 require('dotenv').config()
-const express = require('express') //comon js
+const express = require("express") //comon js
 const configViewEngine = require('./config/viewEngine')
 const webRoutes = require('./routes/web')
 const connection = require('./config/database')
@@ -19,8 +19,8 @@ configViewEngine(app)
 //Khai báo route
 app.use('/', webRoutes)
 
-
-
+//test connection
+connection();
 app.listen(port, hostname, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Backend zero app listening on port ${port}`)
 })
