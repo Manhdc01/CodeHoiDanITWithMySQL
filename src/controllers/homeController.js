@@ -4,7 +4,7 @@ const {getAllUsers,updateUserById, getUserByID, deleteUserById}= require('../ser
 const User = require('../models/user')
 
 const getHomePage = async (req, res) => { 
-    let results = []
+    let results = await User.find({})
     return res.render('home.ejs', {listUsers: results})
 }
 
@@ -48,15 +48,16 @@ const postUpdateUser = async (req, res) => {
     let city = req.body.city
     let userId = req.body.userId
 
-    let [results, fields] = await connection.query( 
-        `
-        UPDATE Users
-        SET email = ?, city = ?, name = ?
-        WHERE id = ?
-        `, [email, city, name, userId]
-    )
+    // let [results, fields] = await connection.query( 
+    //     `
+    //     UPDATE Users
+    //     SET email = ?, city = ?, name = ?
+    //     WHERE id = ?
+    //     `, [email, city, name, userId]
+    // )
 
-    res.send('Updated user success !')
+    await User.updateOne({_id: userId}, {name: name, email: email,city: city});
+    res.redirect('/')
 
     
         
@@ -69,7 +70,9 @@ const getCreatePage = (req, res) => {
 const getUpdatePage = async (req, res) => {
     const userId = req.params.id 
 
-    let user = await getUserByID(userId)
+    // let user = await getUserByID(userId)
+    let user = await User.findById(userId).exec()
+
     // let [results, fields] = await connection.query('Select * from Users where id = ?', [userId])
     
     // let user = results && results.length > 0 ? results[0] : {}
