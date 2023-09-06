@@ -1,9 +1,10 @@
 const mongoose = require('mongoose')
 //Định dạng hình thù database
+
 const customerSchema = new mongoose.Schema({
     name: {
         type: String,
-        require: true
+        required: true
     },
     adreess: String,
     phone: String,
@@ -13,6 +14,6 @@ const customerSchema = new mongoose.Schema({
     },
     {timestamps: true}
     )
-const Customer = mongoose.model("Customer", userSchema);
+const Customer = mongoose.model("Customer", customerSchema)
 
 module.exports = Customer
